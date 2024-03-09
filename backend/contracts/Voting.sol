@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.20;
+pragma solidity 0.8.24;
 import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
 /// @title Un contrat intelligent pour un processus de vote simple dans le cadre de la formation Alyra
