@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.24;
-import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 
 /// @title Un contrat intelligent pour un processus de vote simple dans le cadre de la formation Alyra
 /// @notice Ce contrat permet d'enregistrer des votants, de proposer des choix, de voter et de comptabiliser les votes
@@ -32,7 +33,7 @@ contract Voting is Ownable {
     }
 
     WorkflowStatus public workflowStatus;
-    Proposal[42] proposalsArray;
+    Proposal[] proposalsArray;
     mapping (address => Voter) voters;
 
     /// @notice Emit lorsqu'un votant est enregistré
