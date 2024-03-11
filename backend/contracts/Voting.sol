@@ -3,6 +3,7 @@
 pragma solidity 0.8.24;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+
 /// @title Un contrat intelligent pour un processus de vote simple dans le cadre de la formation Alyra
 /// @notice Ce contrat permet d'enregistrer des votants, de proposer des choix, de voter et de comptabiliser les votes
 /// @dev Le contrat est Ownable, ce qui signifie que le propriétaire du contrat peut ajouter des votants et changer le statut du processus de vote
