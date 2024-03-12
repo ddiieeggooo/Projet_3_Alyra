@@ -1,33 +1,21 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
+// Le module 'hardhat' est importé, ce qui vous permet d'interagir avec les fonctionnalités de Hardhat.
 const hre = require("hardhat");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
-
-  const lockedAmount = hre.ethers.parseEther("0.001");
-
-  const lock = await hre.ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+ // Ici, vous utilisez l'objet 'hre.ethers' pour déployer un contrat. 'Voting' est le nom de votre contrat.
+ const voting = await hre.ethers.deployContract("Voting");
+ // Cette ligne attend que le déploiement du contrat soit terminé. Cela garantit que vous ne continuez pas tant que le contrat n'est pas déployé.
+ await voting.waitForDeployment();
+ // Une fois le contrat déployé, cette ligne imprime dans la console l'adresse du contrat déployé.
+ console.log(
+ `voting deployed to ${voting.target}`
+ );
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+// Vous appelez la fonction 'main' pour exécuter le déploiement du contrat. 
+// Si une erreur se produit, elle est capturée et affichée dans la console.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
