@@ -1,20 +1,29 @@
-'use client'
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { abi, contractAddress } from '@/constants';
+'use client';
+import Layout from "@/components/Layout";
+import { useAccount } from "wagmi";
 
-import { useAccount } from 'wagmi'
-import { readContract, prepareWriteContract, writeContract } from '@wagmi/core'
+import NotConnected from "@/components/NotConnected";
+import SimpleStorage from "@/components/SimpleStorage";
 
-import { useState } from 'react';
-
-import Link from "next/link";
+import { Flex } from "@chakra-ui/react";
 
 export default function Home() {
+
+  // On récupère l'adresse du compte qui est connecté à la DApp
+  // On récupère aussi s'il y a qqn connecté ou pas
+  const { address, isConnected } = useAccount();
+
   return (
-    <nav>
-      <Link href="/">Acceuil</Link>
-      <Link href="/proposals">Proposals</Link>
-      <Link href="/vote">Vote</Link>
-    </nav>
+    <>
+      {isConnected ? (
+        <>
+          <Voting />
+        </>
+      ) : (
+        <>
+          <NotConnected />
+        </>
+      )}
+    </>
   );
 }
