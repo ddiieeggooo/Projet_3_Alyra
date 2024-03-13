@@ -27,8 +27,48 @@ import {
 import { parseAbiItem } from 'viem'
 // On importe le publicClient créé (voir ce fichier pour avoir les commentaires sur ce que fait réellement ce publicClient)
 import { publicClient } from '../utils/client'
+import AddVoter from './AddVoter'
+
+
 
 const Voting = () => {
+
+  const { address } = useAccount()
+
+  const [events, setEvents] = useState([])
+
+  const { data: addressOfVoter, error, isPending, refetch } = useReadContract({
+    address: contractAddress,
+    abi: contractAbi,
+    functionName: 'getVoter',
+    account: address
+})
+
+
+  const getEvents = async() => {
+    const getAddvoterEvents = await publicClient.getLogs({
+        address: contractAddress,
+        event: parseAbiItem('event voterRegistered(address voterAddress)'),
+        fromBlock: 0n,
+        toBlock: 'latest'
+    })
+  }
+
+  useEffect(() => {
+    const getAllEvents = async() => {
+        if(address !== 'undefined') {
+            await getEvents();
+        }
+    }
+    getAllEvents()
+    }, [address])
+
+  return (
+    <>
+        <AddVoter refetch={refetch} getEvents={getEvents} />
+    </>
+)
+
 }
 
 export default Voting
