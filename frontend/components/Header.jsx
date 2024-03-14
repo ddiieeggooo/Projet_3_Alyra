@@ -9,7 +9,7 @@ const Header = () => {
         alignItems="center"
         p="2rem"
     >
-        <Text>Logo</Text>
+        <Text>Voting Project</Text>
         <ConnectButton />
     </Flex>
   )

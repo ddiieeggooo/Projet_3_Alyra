@@ -1,5 +1,7 @@
 'use client';
+
 import Layout from "@/components/Layout";
+
 import { useAccount } from "wagmi";
 
 import NotConnected from "@/components/NotConnected";

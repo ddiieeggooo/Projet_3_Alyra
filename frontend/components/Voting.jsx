@@ -1,20 +1,12 @@
-// On utilise useState ou useEffect ou ChakraUI, donc on met un use client.
-'use client'
-import { useEffect, useState } from 'react'
-import { Flex, Text, Input, Button, useToast, Heading, Spinner } from '@chakra-ui/react'
+import { useState, useEffect } from "react"
 
-// On importe les données du contrat
+import AddVoter from './AddVoter'
+import GetVoter from './GetVoter'
+import AddProposal from './AddProposal'
+import Events from './Events'
+
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useWatchContractEvent } from 'wagmi'
 import { contractAddress, contractAbi } from '@/constants'
-
-// On importe les éléments de Wagmi qui vont nous permettre de :
-/*
-useReadContract : Lire les données d'un contrat
-useAccount : Récupérer les données d'un compte connecté à la DApp via RainbowKit
-useWriteContract : Ecrire des données dans un contrat
-useWaitForTransactionReceipt : Attendre que la transaction soit confirmée (équivalent de transaction.wait() avec ethers)
-useWatchContractEvent : Récupérer en temps réel si un évènement a été émis
-*/
-import { useReadContract, useAccount, useWriteContract, useWaitForTransactionReceipt, useWatchContractEvent } from 'wagmi'
 
 import {
     Alert,
@@ -23,52 +15,62 @@ import {
     AlertDescription,
 } from '@chakra-ui/react'
 
-// Permet de parser l'event
-import { parseAbiItem } from 'viem'
-// On importe le publicClient créé (voir ce fichier pour avoir les commentaires sur ce que fait réellement ce publicClient)
 import { publicClient } from '../utils/client'
-import AddVoter from './AddVoter'
 
+import { parseAbiItem } from 'viem'
 
 
 const Voting = () => {
 
-  const { address } = useAccount()
+    const { address } = useAccount();
 
-  const [events, setEvents] = useState([])
+    const [events, setEvents] = useState([]);
 
-  const { data: addressOfVoter, error, isPending, refetch } = useReadContract({
-    address: contractAddress,
-    abi: contractAbi,
-    functionName: 'getVoter',
-    account: address
-})
-
-
-  const getEvents = async() => {
-    const getAddvoterEvents = await publicClient.getLogs({
+    const { data: addressOfVoter, error, isPending, refetch } = useReadContract({
         address: contractAddress,
-        event: parseAbiItem('event voterRegistered(address voterAddress)'),
-        fromBlock: 0n,
-        toBlock: 'latest'
+        abi: contractAbi,
+        functionName: 'getVoter',
+        account: address
     })
-  }
 
-  useEffect(() => {
-    const getAllEvents = async() => {
-        if(address !== 'undefined') {
-            await getEvents();
-        }
+    const getEvents = async() => {
+        const VotersRegisteredEvents = await publicClient.getLogs({
+            address: contractAddress,
+            event: parseAbiItem("event VoterRegistered(address voterAddress)"),
+            fromBlock: 0n,
+            toBlock: 'latest'
+        })
+
+        const VoterRegisteredEvents = VotersRegisteredEvents.map((event) => ({
+            type: 'VoterRegistered',
+            address: event.args.account,
+            blockNumber: Number(event.blockNumber)
+        }))
+      
+        VoterRegisteredEvents.sort(function (a, b) {
+            return b.blockNumber - a.blockNumber;
+        });
+      
+        setEvents(VoterRegisteredEvents)
     }
-    getAllEvents()
+
+    useEffect(() => {
+        const getAllEvents = async() => {
+            if(address !== 'undefined') {
+                await getEvents();
+            }
+        }
+        getAllEvents()
     }, [address])
 
-  return (
-    <>
+    return (
+        <>
         <AddVoter refetch={refetch} getEvents={getEvents} />
-    </>
-)
-
+        <GetVoter refetch={refetch} getEvents={getEvents} />
+        <AddProposal refetch={refetch} getEvents={getEvents} />
+        <Events events={events} />  
+        </>
+    )
 }
 
-export default Voting
+export default Voting 
