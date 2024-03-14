@@ -28,6 +28,7 @@ import { parseAbiItem } from 'viem'
 // On importe le publicClient créé (voir ce fichier pour avoir les commentaires sur ce que fait réellement ce publicClient)
 import { publicClient } from '../utils/client'
 import AddVoter from './AddVoter'
+import AddProposal from './AddProposal'
 
 
 
@@ -66,6 +67,7 @@ const Voting = () => {
   return (
     <>
         <AddVoter refetch={refetch} getEvents={getEvents} />
+        <AddProposal refetch={refetch} getEvents={getEvents} />
     </>
 )
 

@@ -1,32 +1,26 @@
 'use client'
+
 import { useState } from "react"
-
 import { Heading, Flex, Button, Input, useToast } from "@chakra-ui/react"
-
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi"
-import { parseEther } from "viem"
-
 import { contractAddress, contractAbi } from "@/constants"
 
-const AddVoter = ({ refetch, getEvents }) => {
+const AddProposal = ({ refetch, getEvents }) => {
 
     const { address } = useAccount();
     const toast = useToast();
 
-    const [addedAddr, setaddedAddr] = useState('');
+    const [addedProposal, setaddedProposal] = useState('');
 
     const { data: hash, isPending, writeContract } = useWriteContract({
         mutation: {
-            // Si ça a marché d'écrire dans le contrat
             onSuccess: () => {
-                //Faire quelque chose ici si succès, par exemple un refetch
-                // refetch();
                 // getEvents();
-                setaddedAddr('');
+                setaddedProposal('');
                 refetch();
                 getEvents();
                 toast({
-                    title: "L'adresse a bien été ajoutée",
+                    title: "La proposition a bien été ajoutée",
                     status: "success",
                     duration: 3000,
                     isClosable: true,
@@ -44,12 +38,12 @@ const AddVoter = ({ refetch, getEvents }) => {
         },
     })
 
-    const Addvoter = async() => {
+    const addProposal = async() => {
         writeContract({
             address: contractAddress,
             abi: contractAbi,
-            functionName: 'addVoter',
-            args: [addedAddr],
+            functionName: 'addProposal',
+            args: [addedProposal],
             account: address,
         })
     }
@@ -62,7 +56,7 @@ const AddVoter = ({ refetch, getEvents }) => {
     return (
         <>
             <Heading as='h2' size='xl' mt='1rem'>
-                Add a voter
+                Add a new proposal
             </Heading>
             <Flex
                 justifyContent="space-between"
@@ -70,11 +64,11 @@ const AddVoter = ({ refetch, getEvents }) => {
                 width="100%"
                 mt="1rem"
             >
-                <Input placeholder='Address of the new voter' value={addedAddr} onChange={(e) => setaddedAddr(e.target.value)} />
-                <Button colorScheme='purple' onClick={Addvoter}>{isPending ? 'Adding addr' : 'Add a new address'} </Button>
+                <Input placeholder='New proposal' value={addedProposal} onChange={(e) => setaddedProposal(e.target.value)} />
+                <Button colorScheme='blue' onClick={addProposal}>{isPending ? 'Adding proposal' : 'Proposal added'} </Button>
             </Flex>
         </>
   )
 }
 
-export default AddVoter
+export default AddProposal
