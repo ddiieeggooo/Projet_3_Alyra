@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react"
 
 import AddVoter from './AddVoter'
-<<<<<<< HEAD
 // import GetVoter from './GetVoter'
-=======
->>>>>>> main
 import AddProposal from './AddProposal'
 import Events from './Events'
 import SetVote from './SetVote'
@@ -73,10 +70,7 @@ const Voting = () => {
         <AddVoter refetch={refetch} getEvents={getEvents} />
         <AddProposal refetch={refetch} getEvents={getEvents} />
         <SetVote refetch={refetch} getEvents={getEvents} />
-<<<<<<< HEAD
         <WorkflowStatus refetch={refetch} getEvents={getEvents} />
-=======
->>>>>>> main
         <Events events={events} />
         </>
     )
