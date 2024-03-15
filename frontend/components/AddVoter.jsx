@@ -71,7 +71,7 @@ const AddVoter = ({ refetch, getEvents }) => {
                 mt="1rem"
             >
                 <Input placeholder='Address of the new voter' value={addedAddr} onChange={(e) => setaddedAddr(e.target.value)} />
-                <Button colorScheme='purple' onClick={Addvoter}>{isPending ? 'Adding addr' : 'Addr added'} </Button>
+                <Button colorScheme='purple' onClick={Addvoter}>{isPending ? 'Adding addr' : 'Add a new address'} </Button>
             </Flex>
         </>
   )

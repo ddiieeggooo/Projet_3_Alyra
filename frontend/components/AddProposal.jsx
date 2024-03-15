@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from "react"
 
 import { Heading, Flex, Button, Input, useToast } from "@chakra-ui/react"
@@ -7,12 +8,14 @@ import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagm
 
 import { parseEther } from "viem"
 
+
 import { contractAddress, contractAbi } from "@/constants"
 
 const AddProposal = ({ refetch, getEvents }) => {
 
     const { address } = useAccount();
     const toast = useToast();
+
 
     const [proposalAddr, setProposalAddr] = useState('');
 
@@ -71,7 +74,8 @@ const AddProposal = ({ refetch, getEvents }) => {
                 width="100%"
                 mt="1rem"
             >
-                <Input placeholder='ID Proposal' value={proposalAddr} onChange={(e) => setProposalAddr(e.target.value)} />
+
+                <Input placeholder='New proposal' value={proposalAddr} onChange={(e) => setProposalAddr(e.target.value)} />
                 <Button colorScheme='purple' onClick={Addproposal}>{isPending ? 'Adding proposal' : 'Proposal added'} </Button>
             </Flex>
         </>
