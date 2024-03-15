@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react"
 
 import AddVoter from './AddVoter'
-import GetVoter from './GetVoter'
+// import GetVoter from './GetVoter'
 import AddProposal from './AddProposal'
 import Events from './Events'
 import SetVote from './SetVote'
+import WorkflowStatus from './WorkflowStatus'
+
 
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useWatchContractEvent } from 'wagmi'
 import { contractAddress, contractAbi } from '@/constants'
@@ -24,7 +26,6 @@ import { parseAbiItem } from 'viem'
 const Voting = () => {
 
     const { address } = useAccount();
-
     const [events, setEvents] = useState([]);
 
     const { data: addressOfVoter, error, isPending, refetch } = useReadContract({
@@ -67,8 +68,9 @@ const Voting = () => {
     return (
         <>
         <AddVoter refetch={refetch} getEvents={getEvents} />
-        <GetVoter refetch={refetch} getEvents={getEvents} />
         <AddProposal refetch={refetch} getEvents={getEvents} />
+        <SetVote refetch={refetch} getEvents={getEvents} />
+        <WorkflowStatus refetch={refetch} getEvents={getEvents} />
         <Events events={events} />
         </>
     )

@@ -66,4 +66,4 @@ const SetVote = ({ refetch, getEvents }) => {
   );
 };
 
-export default SetVote;
+export default SetVote

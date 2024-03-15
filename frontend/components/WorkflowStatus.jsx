@@ -1,58 +1,94 @@
 'use client'
 
+import { useState } from 'react'
 import { Button, VStack, useToast } from '@chakra-ui/react';
 import { useWriteContract, useAccount } from 'wagmi';
 import { contractAddress, contractAbi } from '@/constants';
 
 const WorkflowStatus = () => {
+
   const { address } = useAccount();
   const toast = useToast();
 
-  // Function to handle contract interaction feedback
-  const handleFeedback = (error, data, functionName) => {
-    if (error) {
-      toast({
-        title: `Failed to execute ${functionName}`,
-        description: error.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    } else if (data) {
-      toast({
-        title: `${functionName} executed successfully`,
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  };
+  const [workflowStatus, setWorkflowStatus] = useState('');
 
-  const writeContractConfig = (functionName) => ({
-    addressOrName: contractAddress,
-    contractInterface: contractAbi,
-    functionName,
-    onSuccess(data) {
-      handleFeedback(null, data, functionName);
+  const { data: hash, isPending, writeContract } = useWriteContract({
+    mutation: {
+        onSuccess: () => {
+            setWorkflowStatus('');
+            refetch();
+            getEvents();
+            toast({
+                title: "Le workflow a bien été modifié",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        },
+        onError: (error) => {
+            toast({
+                title: error.shortMessage,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        },
     },
-    onError(error) {
-      handleFeedback(error, null, functionName);
-    },
-  });
+})
 
-  const { write: startProposalsRegistering } = useWriteContract(writeContractConfig('startProposalsRegistering'));
-  const { write: endProposalsRegistering } = useWriteContract(writeContractConfig('endProposalsRegistering'));
-  const { write: startVotingSession } = useWriteContract(writeContractConfig('startVotingSession'));
-  const { write: endVotingSession } = useWriteContract(writeContractConfig('endVotingSession'));
-  const { write: tallyVotes } = useWriteContract(writeContractConfig('tallyVotes'));
+  const startProposalsRegistering = async() => {
+    writeContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: 'startProposalsRegistering',
+        account: address,
+    })
+}
+
+  const endProposalsRegistering = async() => {
+    writeContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: 'endProposalsRegistering',
+        account: address,
+    })
+  }
+
+  const startVotingSession = async() => {
+    writeContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: 'startVotingSession',
+        account: address,
+    })
+  }
+
+  const endVotingSession = async() => {
+    writeContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: 'endVotingSession',
+        account: address,
+    })
+  }
+
+  const tallyVotes = async() => {
+    writeContract({
+        address: contractAddress,
+        abi: contractAbi,
+        functionName: 'tallyVotes',
+        account: address,
+    })
+  }
 
   return (
     <VStack spacing={4}>
-      <Button colorScheme="blue" onClick={() => startProposalsRegistering()}>Start Proposals Registering</Button>
-      <Button colorScheme="blue" onClick={() => endProposalsRegistering()}>End Proposals Registering</Button>
-      <Button colorScheme="blue" onClick={() => startVotingSession()}>Start Voting Session</Button>
-      <Button colorScheme="blue" onClick={() => endVotingSession()}>End Voting Session</Button>
-      <Button colorScheme="blue" onClick={() => tallyVotes()}>Tally Votes</Button>
+      <h1> ----------------- only admin ------------------------------ </h1>
+      <Button colorScheme="blue" onClick={startProposalsRegistering}>{isPending ? 'Starting proposals registering' : 'Start proposals registering'}</Button>
+      <Button colorScheme="blue" onClick={endProposalsRegistering}>{isPending ? 'Ending proposals registering' : 'End Proposals Registering'}</Button>
+      <Button colorScheme="blue" onClick={startVotingSession}>{isPending ? 'Starting voting session' : 'Start voting session'}</Button>
+      <Button colorScheme="blue" onClick={endVotingSession}>{isPending ? 'Ending voting session' : 'End voting session'}</Button>
+      <Button colorScheme="blue" onClick={tallyVotes}>{isPending ? 'Tallying votes' : 'Tally Votes'}</Button>
     </VStack>
   );
 };

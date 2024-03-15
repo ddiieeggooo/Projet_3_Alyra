@@ -17,11 +17,7 @@ const AddVoter = ({ refetch, getEvents }) => {
 
     const { data: hash, isPending, writeContract } = useWriteContract({
         mutation: {
-            // Si ça a marché d'écrire dans le contrat
             onSuccess: () => {
-                //Faire quelque chose ici si succès, par exemple un refetch
-                // refetch();
-                // getEvents();
                 setaddedAddr('');
                 refetch();
                 getEvents();
