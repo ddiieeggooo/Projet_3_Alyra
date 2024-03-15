@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react"
 
 import AddVoter from './AddVoter'
+<<<<<<< HEAD
 // import GetVoter from './GetVoter'
+=======
+>>>>>>> main
 import AddProposal from './AddProposal'
 import Events from './Events'
 import SetVote from './SetVote'
@@ -36,24 +39,24 @@ const Voting = () => {
     })
 
     const getEvents = async() => {
-        const VotersRegisteredEvents = await publicClient.getLogs({
+        const votersRegisteredEvents = await publicClient.getLogs({
             address: contractAddress,
             event: parseAbiItem("event VoterRegistered(address voterAddress)"),
             fromBlock: 0n,
             toBlock: 'latest'
         })
 
-        const VoterRegisteredEvents = VotersRegisteredEvents.map((event) => ({
+        const voterRegisteredEvents = votersRegisteredEvents.map((event) => ({
             type: 'VoterRegistered',
-            address: event.args.account,
+            address: event.args.voterAddress,
             blockNumber: Number(event.blockNumber)
         }))
 
-        VoterRegisteredEvents.sort(function (a, b) {
+        voterRegisteredEvents.sort(function (a, b) {
             return b.blockNumber - a.blockNumber;
         });
 
-        setEvents(VoterRegisteredEvents)
+        setEvents(voterRegisteredEvents)
     }
 
     useEffect(() => {
@@ -70,7 +73,10 @@ const Voting = () => {
         <AddVoter refetch={refetch} getEvents={getEvents} />
         <AddProposal refetch={refetch} getEvents={getEvents} />
         <SetVote refetch={refetch} getEvents={getEvents} />
+<<<<<<< HEAD
         <WorkflowStatus refetch={refetch} getEvents={getEvents} />
+=======
+>>>>>>> main
         <Events events={events} />
         </>
     )
