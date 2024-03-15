@@ -4,6 +4,7 @@ import AddVoter from './AddVoter'
 import GetVoter from './GetVoter'
 import AddProposal from './AddProposal'
 import Events from './Events'
+import SetVote from './SetVote'
 
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useWatchContractEvent } from 'wagmi'
 import { contractAddress, contractAbi } from '@/constants'
@@ -46,11 +47,11 @@ const Voting = () => {
             address: event.args.account,
             blockNumber: Number(event.blockNumber)
         }))
-      
+
         VoterRegisteredEvents.sort(function (a, b) {
             return b.blockNumber - a.blockNumber;
         });
-      
+
         setEvents(VoterRegisteredEvents)
     }
 
@@ -68,9 +69,9 @@ const Voting = () => {
         <AddVoter refetch={refetch} getEvents={getEvents} />
         <GetVoter refetch={refetch} getEvents={getEvents} />
         <AddProposal refetch={refetch} getEvents={getEvents} />
-        <Events events={events} />  
+        <Events events={events} />
         </>
     )
 }
 
-export default Voting 
+export default Voting
