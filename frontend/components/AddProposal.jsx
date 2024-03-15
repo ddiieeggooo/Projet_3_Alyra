@@ -1,8 +1,14 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
 import { Heading, Flex, Button, Input, useToast } from "@chakra-ui/react"
+
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi"
+
+import { parseEther } from "viem"
+
+
 import { contractAddress, contractAbi } from "@/constants"
 
 const AddProposal = ({ refetch, getEvents }) => {
@@ -10,17 +16,21 @@ const AddProposal = ({ refetch, getEvents }) => {
     const { address } = useAccount();
     const toast = useToast();
 
-    const [addedProposal, setaddedProposal] = useState('');
+
+    const [proposalAddr, setProposalAddr] = useState('');
 
     const { data: hash, isPending, writeContract } = useWriteContract({
         mutation: {
+            // Si ça a marché d'écrire dans le contrat
             onSuccess: () => {
-                // getEvents();
-                setaddedProposal('');
+                //Faire quelque chose ici si succès, par exemple un refetch
+                //refetch();
+                //getEvents();
+                setProposalAddr('');
                 refetch();
                 getEvents();
                 toast({
-                    title: "La proposition a bien été ajoutée",
+                    title: "La proposal a bien été ajoutée",
                     status: "success",
                     duration: 3000,
                     isClosable: true,
@@ -38,12 +48,12 @@ const AddProposal = ({ refetch, getEvents }) => {
         },
     })
 
-    const addProposal = async() => {
+    const Addproposal = async() => {
         writeContract({
             address: contractAddress,
             abi: contractAbi,
             functionName: 'addProposal',
-            args: [addedProposal],
+            args: [proposalAddr],
             account: address,
         })
     }
@@ -56,7 +66,7 @@ const AddProposal = ({ refetch, getEvents }) => {
     return (
         <>
             <Heading as='h2' size='xl' mt='1rem'>
-                Add a new proposal
+                Add a Proposal
             </Heading>
             <Flex
                 justifyContent="space-between"
@@ -64,8 +74,9 @@ const AddProposal = ({ refetch, getEvents }) => {
                 width="100%"
                 mt="1rem"
             >
-                <Input placeholder='New proposal' value={addedProposal} onChange={(e) => setaddedProposal(e.target.value)} />
-                <Button colorScheme='blue' onClick={addProposal}>{isPending ? 'Adding proposal' : 'Proposal added'} </Button>
+
+                <Input placeholder='New proposal' value={proposalAddr} onChange={(e) => setProposalAddr(e.target.value)} />
+                <Button colorScheme='purple' onClick={Addproposal}>{isPending ? 'Adding proposal' : 'Proposal added'} </Button>
             </Flex>
         </>
   )
