@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Button, Flex, Input, Heading, useToast } from '@chakra-ui/react'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
 import { contractAddress, contractAbi } from '@/constants'
 
 const SetVote = ({ refetch, getEvents }) => {
@@ -66,4 +66,4 @@ const SetVote = ({ refetch, getEvents }) => {
   );
 };
 
-export default SetVote;
+export default SetVote
