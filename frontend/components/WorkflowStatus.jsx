@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button, VStack, useToast } from '@chakra-ui/react';
-import { useWriteContract, useAccount } from 'wagmi';
+import { useWriteContract, useAccount, useReadContract } from 'wagmi';
 import { contractAddress, contractAbi } from '@/constants';
 
 const WorkflowStatus = () => {
@@ -80,6 +80,13 @@ const WorkflowStatus = () => {
         account: address,
     })
   }
+
+  // const { data: winningProposalID, refetch } = useReadContract({
+  //   address: contractAddress,
+  //   abi: contractAbi,
+  //   functionName: 'tallyVotes',
+  //   account: address,
+  // });
 
   return (
     <VStack spacing={4}>

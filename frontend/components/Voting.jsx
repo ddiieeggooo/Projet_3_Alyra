@@ -73,7 +73,6 @@ const Voting = () => {
         <SetVote refetch={refetch} getEvents={getEvents} />
         <WorkflowStatus refetch={refetch} getEvents={getEvents} />
         <Events events={events} />
-        <WinningProposalID refetch={refetch} getEvents={getEvents} />
         </>
     )
 }
