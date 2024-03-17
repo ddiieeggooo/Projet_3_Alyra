@@ -6,6 +6,7 @@ import AddProposal from './AddProposal'
 import Events from './Events'
 import SetVote from './SetVote'
 import WorkflowStatus from './WorkflowStatus'
+import WinningProposalID from './WinningProposalID'
 
 
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useWatchContractEvent } from 'wagmi'
@@ -72,6 +73,7 @@ const Voting = () => {
         <SetVote refetch={refetch} getEvents={getEvents} />
         <WorkflowStatus refetch={refetch} getEvents={getEvents} />
         <Events events={events} />
+        <WinningProposalID refetch={refetch} getEvents={getEvents} />
         </>
     )
 }

@@ -28,7 +28,6 @@ const AddVoter = ({ refetch, getEvents }) => {
                     isClosable: true,
                 });
             },
-            // Si erreur
             onError: (error) => {
                 toast({
                     title: error.shortMessage,
