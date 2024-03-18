@@ -46,14 +46,14 @@ const Voting = () => {
         const votersRegisteredEvents = await publicClient.getLogs({
             address: contractAddress,
             event: parseAbiItem("event VoterRegistered(address voterAddress)"),
-            fromBlock: 0n,
+            fromBlock: 5512413n,
             toBlock: 'latest'
         })
 
         const proposalsRegisteredEvents = await publicClient.getLogs({
             address: contractAddress,
             event: parseAbiItem("event ProposalRegistered(uint proposalId)"),
-            fromBlock: 0n,
+            fromBlock: 5512413n,
             toBlock: 'latest'
         })
 
