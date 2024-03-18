@@ -24,4 +24,4 @@ Voici la liste de la stack utilisée pour la réalisation du projet
 - Next.js
 - Wagmi/Viem
 - Rainbow Kit
--
+- Chakra ui kit

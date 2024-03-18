@@ -21,8 +21,7 @@ const Events = ({ events }) => {
                     {events.map((event) => {
                     return (
                         <Tr key={crypto.randomUUID()}>
-                            <Td>{event.type === 'VoterRegistered'}
-                            <Badge colorScheme='green'>Voter registered</Badge></Td>
+                            <Td>{event.type === 'VoterRegistered' ? <Badge colorScheme='green'>Voter registered</Badge> : <Badge colorScheme='red'>Proposal registered</Badge>}</Td>
                             <Td>{event.address}</Td>
                         </Tr>
                         )
