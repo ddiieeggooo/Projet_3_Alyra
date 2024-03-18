@@ -35,10 +35,11 @@ const Voting = () => {
         account: address
     })
 
-    const WinningProposalID = useReadContract ({
+    //faire winningid
+    const { data: winningProposalID } = useReadContract({
       address: contractAddress,
       abi: contractAbi,
-      functionName: 'WinningProposalID',
+      functionName: 'winningProposalID',
       account: address
     })
 
@@ -79,7 +80,7 @@ const Voting = () => {
         <SetVote refetch={refetch} getEvents={getEvents} />
         <WorkflowStatus refetch={refetch} getEvents={getEvents} />
         <Events events={events} />
-        <WinningProposalID winningProposalID ={WinningProposalID} />
+        <WinningProposalID data={winningProposalID}/>
         </>
     )
 }
