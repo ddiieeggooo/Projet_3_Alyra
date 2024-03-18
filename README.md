@@ -2,7 +2,7 @@
 
 ## Pour correction :
 
-Lien vidéo: Loom
+Lien vidéo: https://www.loom.com/share/981db4dbfa224f4fa401a549abb09a8f?sid=c8ff04c3-bb0f-4f5f-bb74-ef07952378aa
 Lien Déploiement: Vercel
 Déployé sur sépolia
 
