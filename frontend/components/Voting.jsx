@@ -49,17 +49,28 @@ const Voting = () => {
             toBlock: 'latest'
         })
 
-        const voterRegisteredEvents = votersRegisteredEvents.map((event) => ({
+        const proposalsRegisteredEvents = await publicClient.getLogs({
+            address: contractAddress,
+            event: parseAbiItem("event ProposalRegistered(uint proposalId)"),
+            fromBlock: 0n,
+            toBlock: 'latest'
+        })
+
+        const combinedEvents = votersRegisteredEvents.map((event) => ({
             type: 'VoterRegistered',
             address: event.args.voterAddress,
             blockNumber: Number(event.blockNumber)
-        }))
+        })).concat(proposalsRegisteredEvents.map((event) => ({
+            type: 'ProposalRegistered',
+            idProposal: event.args.proposalId,
+            blockNumber: Number(event.blockNumber)
+        })))
 
-        voterRegisteredEvents.sort(function (a, b) {
+        combinedEvents.sort(function (a, b) {
             return b.blockNumber - a.blockNumber;
         });
 
-        setEvents(voterRegisteredEvents)
+        setEvents(combinedEvents)
     }
 
     useEffect(() => {
