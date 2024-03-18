@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 
 import AddVoter from './AddVoter'
-// import GetVoter from './GetVoter'
 import AddProposal from './AddProposal'
 import Events from './Events'
 import SetVote from './SetVote'
@@ -79,7 +78,6 @@ const Voting = () => {
         <SetVote refetch={refetch} getEvents={getEvents} />
         <WorkflowStatus refetch={refetch} getEvents={getEvents} />
         <Events events={events} />
-        <WinningProposalID winningProposalID ={WinningProposalID} />
         </>
     )
 }
