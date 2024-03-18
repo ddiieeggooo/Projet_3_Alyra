@@ -1,11 +1,8 @@
 'use client'
+
 import { useState } from "react"
-
 import { Heading, Flex, Button, Input, useToast } from "@chakra-ui/react"
-
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi"
-import { parseEther } from "viem"
-
 import { contractAddress, contractAbi } from "@/constants"
 
 const AddVoter = ({ refetch, getEvents }) => {
@@ -28,7 +25,6 @@ const AddVoter = ({ refetch, getEvents }) => {
                     isClosable: true,
                 });
             },
-            // Si erreur
             onError: (error) => {
                 toast({
                     title: error.shortMessage,

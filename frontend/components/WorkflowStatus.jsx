@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button, VStack, useToast } from '@chakra-ui/react';
-import { useWriteContract, useAccount } from 'wagmi';
+import { useWriteContract, useAccount, useReadContract } from 'wagmi';
 import { contractAddress, contractAbi } from '@/constants';
 
 const WorkflowStatus = () => {
