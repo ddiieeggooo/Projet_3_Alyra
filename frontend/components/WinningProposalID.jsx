@@ -1,14 +1,14 @@
-import { Text } from "@chakra-ui/react"
+'use client'
 
-const WinningProposalID = ({ winningProposalID }) => {
+import { Button, VStack, useToast, Text, Spinner } from '@chakra-ui/react';
+
+
+const WinningProposalID = ({data}) => {
+console.log(data)
   return (
     <>
-        { data !== undefined ? (
-            <Text>The winning proposal ID is : <Text as='b'>{winningProposalID.toString()} </Text></Text>
-        ) : (
-            <Text>Winning proposal ID is still undefined</Text>
-        )}
-    </>
+              <Text>winner :{Number(data)} </Text>
+      </>
 )
 }
 

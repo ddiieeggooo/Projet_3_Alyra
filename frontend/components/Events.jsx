@@ -3,7 +3,6 @@ import { Heading, Flex, Text, Badge, Table, Thead, Tbody, Tr, Th, Td, TableConta
 import { formatEther } from "viem"
 
 const Events = ({ events }) => {
-  console.log(events); 
   return (
     <>
         <Heading as='h2' size='xl' mt="2rem" mb='1rem'>
