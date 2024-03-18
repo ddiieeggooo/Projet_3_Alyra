@@ -81,13 +81,6 @@ const WorkflowStatus = () => {
     })
   }
 
-  // const { data: winningProposalID, refetch } = useReadContract({
-  //   address: contractAddress,
-  //   abi: contractAbi,
-  //   functionName: 'tallyVotes',
-  //   account: address,
-  // });
-
   return (
     <VStack spacing={4}>
       <h1> ----------------- only admin ------------------------------ </h1>
